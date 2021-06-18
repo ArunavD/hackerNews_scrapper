@@ -67,15 +67,15 @@ for page in range (0,pagesToGet+1):
         Title = j.find('a', attrs={'class':'storylink'}).text
         Link = j.find('a', attrs={'class':'storylink'})['href'].strip()
         Source = j.find('span', attrs={'class':'sitestr'}).text.strip()
-        Posted = j.find('span', attrs={'class':'age'}).text.strip()
+        Posted = j.find('span', attrs={'class':'age'}).text
         Author = j.find('a', attrs={'class':'hnuser'}).text
         Score = j.find('span', attrs={'class':'score'}).text
 
 
         frame.append((Rank,Title,Link,Source,Posted,Author,Score))
 
-        f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted.replace(",","^")+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
-        
+        f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
+
 
 
 
