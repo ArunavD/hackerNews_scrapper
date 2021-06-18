@@ -45,7 +45,39 @@ for page in range (0,pagesToGet+1):
     frame=[]
 
 
-    
+
+    # all links of news blogs listed on a page
+    links = soup.find_all('td', attrs={'class':'title'})
+    print(len(links))
+
+
+
+    # writing to a file
+    filename = "hackerNews.csv"
+    f = open(filename,"w")
+    headers  = "Rank, Title, Link, Source, Posted, Author, Score \n"
+
+
+
+    # Extracting details
+
+    for j in links:
+
+        Rank = j.find('span', attrs={'class':'rank'}).text
+        Title = j.find('a', attrs={'class':'storylink'}).text
+        Link = j.find('a', attrs={'class':'storylink'})['href'].strip()
+        Source = j.find('span', attrs={'class':'sitestr'}).text.strip()
+        Posted = j.find('span', attrs={'class':'age'}).text.strip()
+        Author = j.find('a', attrs={'class':'hnuser'}).text
+        Score = j.find('span', attrs={'class':'score'}).text
+
+
+        frame.append((Rank,Title,Link,Source,Posted,Author,Score))
+
+        f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted.replace(",","^")+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
+        
+
+
 
 
 
