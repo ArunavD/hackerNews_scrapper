@@ -1,4 +1,5 @@
 # importing libraries
+import urllib.request
 import sys
 import time
 from bs4 import BeautifulSoup
@@ -64,7 +65,7 @@ for page in range (0,pagesToGet+1):
     for j in links:
 
         Rank = j.find('span', attrs={'class':'rank'}).text
-        Title = j.find('a', attrs={'class':'storylink'}).text
+        Title = j.find('a', attrs ={'class':'storylink'}).text.strip()
         Link = j.find('a', attrs={'class':'storylink'})['href'].strip()
         Source = j.find('span', attrs={'class':'sitestr'}).text.strip()
         Posted = j.find('span', attrs={'class':'age'}).text
@@ -77,6 +78,15 @@ for page in range (0,pagesToGet+1):
         f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
 
 
+    upperFrame.extend(frame)
+
+f.close()
+
+
+# visualizing dataframe using pandas
+
+data = pd.DataFrame(upperFrame, columns= ['Rank', 'Title', 'Link', 'Source', 'Posted', 'Author', 'Score'])
+data.head()
 
 
 
