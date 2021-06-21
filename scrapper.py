@@ -2,7 +2,7 @@
 import urllib.request
 import sys
 import time
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup,SoupStrainer
 import requests
 import pandas as pd
 
@@ -41,7 +41,8 @@ for page in range (0,pagesToGet+1):
 
 
     # parsing html using beautifulSoup to pull data out of HTML and XML files
-    soup = BeautifulSoup(page.content,'html.parser')
+    only_td = SoupStrainer('td')
+    soup = BeautifulSoup(page.content,'html.parser', parse_only=only_td)
 
     frame=[]
 
