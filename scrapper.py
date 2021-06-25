@@ -60,7 +60,6 @@ for page in range (0,pagesToGet+1):
     headers  = "Rank, Title, Link, Source, Posted, Author, Score \n"
 
 
-
     # Extracting details
 
     for j in links:
