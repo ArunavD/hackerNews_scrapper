@@ -1,2 +1,3 @@
 add required libraies
 
+scrap data from "https://news.ycombinator.com/"
