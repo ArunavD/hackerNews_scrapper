@@ -49,8 +49,10 @@ for page in range (0,pagesToGet+1):
 
 
     # all links of news blogs listed on a page
-    links = soup.find_all('td', attrs={'class':'title'})
-    print(len(links))
+    td_title = soup.find_all('td', attrs={'class':'title'})
+    td_subtext = soup.find_all('td', attrs={'class':'subtext'})
+    td_rank = soup.find_all('td', attrs={'class':'title', 'align':'right'})
+    td_titleonly = [t for t in td_title if t not in td_rank]
 
 
 
@@ -62,15 +64,15 @@ for page in range (0,pagesToGet+1):
 
     # Extracting details
 
-    for j in links:
+    for (i,j,k) in (td_subtext,td_titleonly,td_rank):
 
-        Rank = j.find('span', attrs={'class':'rank'}).text
+        Rank = k.find('span', attrs={'class':'rank'}).text
         Title = j.find('a', attrs ={'class':'storylink'}).text.strip()
         Link = j.find('a', attrs={'class':'storylink'})['href'].strip()
         Source = j.find('span', attrs={'class':'sitestr'}).text.strip()
-        Posted = j.find('span', attrs={'class':'age'}).text
-        Author = j.find('a', attrs={'class':'hnuser'}).text
-        Score = j.find('span', attrs={'class':'score'}).text
+        Posted = i.find('span', attrs={'class':'age'}).text
+        Author = i.find('a', attrs={'class':'hnuser'}).text
+        Score = i.find('span', attrs={'class':'score'}).text
 
 
         frame.append((Rank,Title,Link,Source,Posted,Author,Score))
