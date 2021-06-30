@@ -59,27 +59,46 @@ for page in range (0,pagesToGet+1):
     # writing to a file
     filename = "hackerNews.csv"
     f = open(filename,"w")
-    headers  = "Rank, Title, Link, Source, Posted, Author, Score \n"
+    headers  = "Rank, Title, Link, Source, Posted, Author, Score/n"
+
+
+
+    # number of iterations
+    num_iter = min(len(td_rank), len(td_subtext))
 
 
     # Extracting details
 
-    for (i,j,k) in (td_subtext,td_titleonly,td_rank):
+    for i in range(num_iter):
 
-        Rank = k.find('span', attrs={'class':'rank'}).text
-        Title = j.find('a', attrs ={'class':'storylink'}).text.strip()
-        Link = j.find('a', attrs={'class':'storylink'})['href'].strip()
-        Source = j.find('span', attrs={'class':'sitestr'}).text.strip()
-        Posted = i.find('span', attrs={'class':'age'}).text
-        Author = i.find('a', attrs={'class':'hnuser'}).text
-        Score = i.find('span', attrs={'class':'score'}).text
+        Rank = td_rank[i].find('span', attrs={'class':'rank'})
+        Title = td_titleonly[i].find('a', attrs ={'class':'storylink'})
+       #Link = td_titleonly[i].find('a', attrs={'class':'storylink'})['href']
+        Link = Title['href'] if Title and Title['href'].startswith('https') else 'https://news.ycombinator.com/'+Title['href']
+        Source = td_titleonly[i].find('span', attrs={'class':'sitestr'})
+        Posted = td_subtext[i].find('span', attrs={'class':'age'})
+        Author = td_subtext[i].find('a', attrs={'class':'hnuser'})
+        Score = td_subtext[i].find('span', attrs={'class':'score'})
 
 
         frame.append((Rank,Title,Link,Source,Posted,Author,Score))
 
-        f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
+        #f.write(Rank.replace(",","^")+","+Title.replace(",","^")+","+Link+","+Source.replace(",","^")+","+Posted+","+Author.replace(",","^")+","+Author.replace(",","^")+"\n")
 
 
+        # writing to the file
+        f.write(Rank.text.replace('.','') if Rank else 'Could not get article number')
+        f.write(','+Title.text if Title else 'Could not get article title')
+        f.write(','+Link if Link else 'No URL found for this article')
+        f.write(','+Source.text if Source else 'https://news.ycombinator.com')
+        f.write(','+Posted.text if Posted else 'Could not find when the article was posted')
+        f.write(','+Author.text if Author else 'Could not get article author')
+        f.write(','+Score.text if Score else 'Not Scored')
+        
+        f.write('\n')
+
+    
+    
     upperFrame.extend(frame)
 
 f.close()
