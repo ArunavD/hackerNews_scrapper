@@ -14,7 +14,7 @@ import pandas as pd
 # Extracting data from a web page
 
 # number of pages to which want to scrape
-pagesToGet = 23
+pagesToGet = 16
 
 
 upperFrame = []
@@ -73,7 +73,7 @@ for page in range (0,pagesToGet+1):
 
         Rank = td_rank[i].find('span', attrs={'class':'rank'})
         Title = td_titleonly[i].find('a', attrs ={'class':'storylink'})
-       #Link = td_titleonly[i].find('a', attrs={'class':'storylink'})['href']
+        #Link = td_titleonly[i].find('a', attrs={'class':'storylink'})['href']
         Link = Title['href'] if Title and Title['href'].startswith('https') else 'https://news.ycombinator.com/'+Title['href']
         Source = td_titleonly[i].find('span', attrs={'class':'sitestr'})
         Posted = td_subtext[i].find('span', attrs={'class':'age'})
