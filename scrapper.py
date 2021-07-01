@@ -106,8 +106,8 @@ f.close()
 
 # visualizing dataframe using pandas
 
-data = pd.DataFrame(upperFrame, columns= ['Rank', 'Title', 'Link', 'Source', 'Posted', 'Author', 'Score'])
-data.head()
+#data = pd.DataFrame(upperFrame, columns= ['Rank', 'Title', 'Link', 'Source', 'Posted', 'Author', 'Score'])
+#data.head()
 
 
 
